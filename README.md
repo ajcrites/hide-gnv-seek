@@ -1,6 +1,6 @@
 # Hide (g)n(v) Seek
 
-Want to play hide and seek with your communinit, discover
+Want to play hide and seek with your community, discover
 new interesting places, and eat great food? This is the app
 for you!
 
@@ -12,7 +12,7 @@ for you!
 
 After installation, run `yarn build -- --watch`. Then, open
 `index.html` in a browser (or use a static file server
-such as `python -m SimpleHTTPServer 8000`) and you should see the
+such as `python -m SimpleHTTPServer 8000`), and you should see the
 app.
 
 When you make changes the app will rebuild automatically,
