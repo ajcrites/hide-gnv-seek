@@ -1,0 +1,26 @@
+body {
+    background-color: white;
+}
+.header {
+	text-align: center;
+}
+.header img {
+    width: auto;
+    height: 250px;
+}
+h1 {
+    color: #FA4616;
+    padding-top: 5px;
+    padding-left: 125px;
+    padding-bottom: 5px;
+    padding-right: 100px;
+    font-family: Opens Sans;
+    font-size: 200%;
+}
+p {
+    color: #0021A5;
+    font-family: Opens Sans;
+    font-size: 200%;
+    border: 3px solid #5E8E3F;
+    margin: 15px;
+}
