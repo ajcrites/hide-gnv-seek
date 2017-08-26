@@ -1,0 +1,21 @@
+{
+  "name": "hide-gnv-seek",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "webpack"
+  },
+  "description": "Hide (g)n(v) Seek -- Community Discovery!",
+  "main": "index.js",
+  "repository": "git@github.com:ajcrites/hide-gnv-seek.git",
+  "author": "Andrew Crites <acrites@mobiquityinc.com>",
+  "license": "MIT",
+  "dependencies": {
+    "css-loader": "^0.28.5",
+    "ts-loader": "^2.3.4",
+    "typescript": "^2.4.2",
+    "vue": "^2.4.2",
+    "vue-loader": "^13.0.4",
+    "vue-template-compiler": "^2.4.2",
+    "webpack": "^3.5.5"
+  }
+}
