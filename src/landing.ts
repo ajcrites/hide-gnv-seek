@@ -19,6 +19,7 @@ export default Vue.extend({
       <qrcode bg-color="#FA4616" fg-color="#0021A5" val="http://hide-gnv-seek.s3-website.us-east-2.amazonaws.com/#/place/2AxmrpUAlCW8UukOSUOSwu"></qrcode>
 
       Last Place: {{lastPlace}}
+      <a href="#/hint">Get Hunting</a>
     </div>
   `,
 });
