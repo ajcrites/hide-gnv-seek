@@ -67,7 +67,7 @@ export default Vue.extend({
         const placeId = this.$route.params.id;
         const place = await client.getEntry(placeId);
         this.error = false;
-        let img = null,
+        let img = null;
         if (place.fields.image) {
           img = await client.getAsset(place.fields.image.sys.id);
         }
@@ -94,7 +94,7 @@ export default Vue.extend({
           history: place.fields.history,
           imgSrc: get(img, 'fields.file.url'),
           story: get(story, 'fields.story'),
-          partner,
+          partner
         };
       }
       catch (err) {
