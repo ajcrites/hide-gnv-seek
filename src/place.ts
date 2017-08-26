@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { createClient } from 'contentful';
 
+import { get } from 'lodash';
+
 const client = createClient({
   space: '881sco8a7hxb',
   accessToken: '41354290dd34a67e7c1f04c8ef22d1be8f9bc402bec4b42bb002cc8b340b200a',
@@ -10,7 +12,17 @@ export default Vue.extend({
   template: `
     <div>
       <div v-if="place && !error">
-        {{place.name}}
+        <h1>{{place.name}}</h1>
+
+        <img v-if="place.imgSrc" :src="place.imgSrc">
+
+        <p>
+          {{place.history}}
+        </p>
+
+        <blockquote>
+          {{place.story}}
+        </blockquote>
       </div>
 
       <div v-if="error">
@@ -35,13 +47,30 @@ export default Vue.extend({
   methods: {
     async fetchData() {
       try {
-        const place = await client.getEntry(this.$route.params.id);
+        const placeId = this.$route.params.id;
+        const place = await client.getEntry(placeId);
         this.error = false;
+        let img = null,
+        if (place.fields.image) {
+          img = await client.getAsset(place.fields.image.sys.id);
+        }
+        const space = await client.getEntries({
+          content_type: 'story',
+          'fields.placeId.sys.id': placeId,
+        });
+
+        // Select a random story for this place
+        const story = space.items[Math.floor(Math.random() * space.items.length)];
         this.place = {
           name: place.fields.name,
+          image: place.fields.image,
+          history: place.fields.history,
+          imgSrc: get(img, 'fields.file.url'),
+          story: get(story, 'fields.story'),
         };
       }
       catch (err) {
+        console.log(err);
         this.error = true;
       }
     },
