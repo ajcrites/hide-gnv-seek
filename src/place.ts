@@ -3,12 +3,17 @@ import { createClient } from 'contentful';
 
 import { get, sample } from 'lodash';
 
+import StoryEntry from './story-entry';
+
 const client = createClient({
   space: '881sco8a7hxb',
   accessToken: '41354290dd34a67e7c1f04c8ef22d1be8f9bc402bec4b42bb002cc8b340b200a',
 });
 
 export default Vue.extend({
+  components: {
+    'story-entry': StoryEntry,
+  },
   template: `
     <div>
       <div v-if="place && !error">
@@ -30,11 +35,16 @@ export default Vue.extend({
         <blockquote>
           {{place.story}}
         </blockquote>
+
+        <hr>
+
+        <story-entry :placeId="place.id"></story-entry>
       </div>
 
       <div v-if="error">
         Sorry, but that doesn't seem to be a place!
       </div>
+
     </div>
   `,
   created() {
@@ -78,6 +88,7 @@ export default Vue.extend({
         // Select a random story for this place
         const story = sample(space.items);
         this.place = {
+          id: place,
           name: place.fields.name,
           image: place.fields.image,
           history: place.fields.history,
@@ -87,7 +98,7 @@ export default Vue.extend({
         };
       }
       catch (err) {
-        console.log(err);
+        console.warn(err);
         this.error = true;
       }
     },
