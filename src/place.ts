@@ -39,9 +39,11 @@ export default Vue.extend({
           {{place.story}}
         </blockquote>
 
+        <a href="#/hint">Get Hunting!</a>
         <hr>
 
         <story-entry :placeId="place.id"></story-entry>
+
       </div>
 
       <div v-if="error">
