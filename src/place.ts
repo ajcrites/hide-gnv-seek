@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { createClient } from 'contentful';
 
-import { get } from 'lodash';
+import { get, sample } from 'lodash';
 
 const client = createClient({
   space: '881sco8a7hxb',
@@ -19,6 +19,13 @@ export default Vue.extend({
         <p>
           {{place.history}}
         </p>
+
+        <div v-if="place.partner">
+          Please see our partner,
+          <router-link :to="'/place/' + place.partner.id">
+            {{place.partner.name}}
+          </router-link>
+        </div>
 
         <blockquote>
           {{place.story}}
@@ -58,15 +65,25 @@ export default Vue.extend({
           content_type: 'story',
           'fields.placeId.sys.id': placeId,
         });
+        const partnerId = sample(place.fields.partners);
+        let partner;
+        if (partnerId) {
+          partner = await client.getEntry(partnerId.sys.id);
+          partner = {
+            name: partner.fields.name,
+            id: partnerId.sys.id,
+          };
+        }
 
         // Select a random story for this place
-        const story = space.items[Math.floor(Math.random() * space.items.length)];
+        const story = sample(space.items);
         this.place = {
           name: place.fields.name,
           image: place.fields.image,
           history: place.fields.history,
           imgSrc: get(img, 'fields.file.url'),
           story: get(story, 'fields.story'),
+          partner,
         };
       }
       catch (err) {
