@@ -1,8 +1,16 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+import Landing from './landing';
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  routes: [
+    { path: '/landing', component: Landing },
+  ],
+});
 
 new Vue({
-  el: '#app',
-  template: `
-    <h1>Hide <span style="color: gray">g</span>n<span style="color: gray">v</span> Seek!</h1>
-  `,
-});
+  router,
+}).$mount("#app");
