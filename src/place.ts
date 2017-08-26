@@ -27,10 +27,16 @@ export default Vue.extend({
       place: null,
     };
   },
+  watch: {
+    $route(to, from) {
+      this.fetchData();
+    },
+  },
   methods: {
     async fetchData() {
       try {
         const place = await client.getEntry(this.$route.params.id);
+        this.error = false;
         this.place = {
           name: place.fields.name,
         };
