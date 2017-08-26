@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { createClient } from 'contentful';
 
+import { get } from 'lodash';
+
 const client = createClient({
   space: '881sco8a7hxb',
   accessToken: '41354290dd34a67e7c1f04c8ef22d1be8f9bc402bec4b42bb002cc8b340b200a',
@@ -48,7 +50,10 @@ export default Vue.extend({
         const placeId = this.$route.params.id;
         const place = await client.getEntry(placeId);
         this.error = false;
-        const img = await client.getAsset(place.fields.image.sys.id);
+        let img = null,
+        if (place.fields.image) {
+          img = await client.getAsset(place.fields.image.sys.id);
+        }
         const space = await client.getEntries({
           content_type: 'story',
           'fields.placeId.sys.id': placeId,
@@ -60,11 +65,12 @@ export default Vue.extend({
           name: place.fields.name,
           image: place.fields.image,
           history: place.fields.history,
-          imgSrc: img.fields.file.url,
-          story: story.fields.story,
+          imgSrc: get(img, 'fields.file.url'),
+          story: get(story, 'fields.story'),
         };
       }
       catch (err) {
+        console.log(err);
         this.error = true;
       }
     },
