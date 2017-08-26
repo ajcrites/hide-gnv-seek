@@ -17,6 +17,9 @@ export default Vue.extend({
   template: `
     <div>
       <div v-if="place && !error">
+        <h1 style="color: red;" v-if="itsJustWhatIveBeenSearchingFor">
+          You found your friend!
+        </h1>
         <h1>{{place.name}}</h1>
 
         <img v-if="place.imgSrc" :src="place.imgSrc">
@@ -54,6 +57,7 @@ export default Vue.extend({
     return {
       error: null,
       place: null,
+      itsJustWhatIveBeenSearchingFor: false,
     };
   },
   watch: {
@@ -65,6 +69,10 @@ export default Vue.extend({
     async fetchData() {
       try {
         const placeId = this.$route.params.id;
+        if (placeId == localStorage.getItem('lookingFor')) {
+          this.itsJustWhatIveBeenSearchingFor = true;
+          localStorage.removeItem('lookingFor');
+        }
         const place = await client.getEntry(placeId);
         this.error = false;
         let img = null;
@@ -94,7 +102,7 @@ export default Vue.extend({
           history: place.fields.history,
           imgSrc: get(img, 'fields.file.url'),
           story: get(story, 'fields.story'),
-          partner
+          partner,
         };
       }
       catch (err) {

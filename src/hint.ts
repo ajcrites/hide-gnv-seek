@@ -12,14 +12,17 @@ export default Vue.extend({
   template: `
     <div>
       <h1>Get a Hint</h1>
-      <div v-if="hintList && !error">
+      <div v-if="hintList && !error && !done">
         <ul id="hintList">
           <li v-for="hint in hintList">
-            <a>{{ hint.fields.body }}</a>
+            <a @click="signUpForHint(hint)">{{ hint.fields.body }}</a>
           </li>
         </ul>
       </div>
-      
+
+      <div v-if="done">
+        Okay, you've signed up to find a place for that hint!
+      </div>
 
       <div v-if="error">
         Sorry, but that doesn't seem to be a hint!
@@ -33,6 +36,7 @@ export default Vue.extend({
     return {
       error: null,
       hintList: null,
+      done: null,
     };
   },
   watch: {
@@ -48,8 +52,6 @@ export default Vue.extend({
           content_type: 'hint'
         })
 
-        console.log(hintList);
-
         this.error = false;
         this.hintList = hintList.items;
       }
@@ -57,5 +59,10 @@ export default Vue.extend({
         this.error = true;
       }
     },
+
+    signUpForHint(hint) {
+      localStorage.setItem('lookingFor', hint.fields.place.sys.id);
+      this.done = true;
+    }
   },
 });
