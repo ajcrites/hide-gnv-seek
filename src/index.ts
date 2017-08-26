@@ -9,9 +9,18 @@ import Hint from './hint';
 
 Vue.use(VueRouter);
 
+const sot = {
+  lastPlace: '',
+  places: [],
+};
+
 const router = new VueRouter({
+  data() {
+    return sot;
+  },
   routes: [
-    { path: '/landing', component: Landing },
+    { path: '*', redirect: '/' },
+    { path: '/', component: Landing },
     { path: '/place/:id', component: Place, props: true },
     { path: '/hint', component: Hint },
   ],

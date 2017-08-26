@@ -96,6 +96,7 @@ export default Vue.extend({
           story: get(story, 'fields.story'),
           partner
         };
+        this.$root.$data.lastPlace = this.place.name;
       }
       catch (err) {
         console.warn(err);
